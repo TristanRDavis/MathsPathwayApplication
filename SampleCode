@@ -1,0 +1,16 @@
+public async Task<bool> IsTestWithinTerms(DateTimeOffset desiredTestDate, Guid schoolId)
+{
+    var terms = (await _repositoryManager.SchoolRepository.GetSchool(schoolId)).Terms;
+    var res = false;
+    foreach (var term in terms)
+    {
+        if (term.StartDate.Date <= desiredTestDate.Date)
+        {
+            if (term.EndDate.Date >= desiredTestDate.Date)
+            {
+              res = true;
+            }
+        }
+    }
+    return res;
+}
